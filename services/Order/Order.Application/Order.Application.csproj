@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.3" />
+    <PackageReference Include="MassTransit" Version="8.0.6" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\sharedkernel\SharedKernel\SharedKernel.csproj" />
+    <ProjectReference Include="..\..\Shipping\Shipping.Domain\Shipping.Domain.csproj" />
+    <ProjectReference Include="..\..\Shipping\Shipping.Interface\Shipping.Interface.csproj" />
+    <ProjectReference Include="..\..\Status\Status.Interface\Status.Interface.csproj" />
+    <ProjectReference Include="..\Order.Domain\Order.Domain.csproj" />
+    <ProjectReference Include="..\Order.Interface\Order.Interface.csproj" />
+  </ItemGroup>
+
+</Project>

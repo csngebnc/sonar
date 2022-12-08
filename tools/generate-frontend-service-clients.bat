@@ -1,0 +1,1 @@
+ nswag run ../src/services/Order/Order.Api/nswag.json /runtime:Net50 & nswag run ../src/services/Partner/Partner.Api/nswag.json /runtime:Net50 & nswag run ../src/services/Shipping/Shipping.Api/nswag.json /runtime:Net50 & nswag run ../src/services/Status/Status.Api/nswag.json /runtime:Net50 & pause

@@ -1,0 +1,20 @@
+﻿@page
+@model IdentityProvider.Api.Pages.Account.LogoutModel
+@{
+    ViewData["Title"] = "Kijelentkezés";
+    Layout = "_Layout";
+}
+
+@using Microsoft.AspNetCore.Http.Extensions
+@using System.Web
+
+<main>
+    <h1>Delivery</h1>
+    <div class="card">
+        <form method="post">
+            <div class="form-footer">
+                <button name="action" type="submit" value="logout">Kijelentkezés</button>
+            </div>
+        </form>
+    </div>
+</main> 

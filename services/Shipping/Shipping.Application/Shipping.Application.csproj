@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.0.6" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\libs\CSONGE.Dal\CSONGE.Dal.csproj" />
+    <ProjectReference Include="..\..\IdentityProvider\IdentityProvider.Interface\IdentityProvider.Interface.csproj" />
+    <ProjectReference Include="..\..\Order\Order.Interface\Order.Interface.csproj" />
+    <ProjectReference Include="..\Shipping.Dal\Shipping.Dal.csproj" />
+    <ProjectReference Include="..\Shipping.Interface\Shipping.Interface.csproj" />
+  </ItemGroup>
+
+</Project>

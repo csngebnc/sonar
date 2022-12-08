@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\libs\CSONGE.Domain\CSONGE.Domain.csproj" />
+    <ProjectReference Include="..\..\..\sharedkernel\SharedKernel\SharedKernel.csproj" />
+    <ProjectReference Include="..\Status.Interface\Status.Interface.csproj" />
+  </ItemGroup>
+
+</Project>

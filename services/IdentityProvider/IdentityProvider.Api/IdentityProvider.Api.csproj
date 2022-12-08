@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="IdentityServer4" Version="4.1.2" />
+		<PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.2" />
+		<PackageReference Include="MassTransit" Version="8.0.6" />
+		<PackageReference Include="MassTransit.RabbitMQ" Version="8.0.6" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\libs\CSONGE.Dal\CSONGE.Dal.csproj" />
+	  <ProjectReference Include="..\..\..\libs\CSONGE.Messaging\CSONGE.Messaging.csproj" />
+	  <ProjectReference Include="..\..\..\sharedkernel\SharedKernel\SharedKernel.csproj" />
+	  <ProjectReference Include="..\IdentityProvider.Application\IdentityProvider.Application.csproj" />
+	  <ProjectReference Include="..\IdentityProvider.Dal\IdentityProvider.Dal.csproj" />
+	  <ProjectReference Include="..\IdentityProvider.Domain\IdentityProvider.Domain.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Controllers\" />
+	</ItemGroup>
+</Project>

@@ -1,0 +1,68 @@
+version: '3.4'
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:19.0.3
+
+  portainer:
+    image: portainer/portainer-ce
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    
+  orderdb:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+
+  idpdb:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+
+  partnerdb:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+
+  shippingdb:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+
+  statusdb:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+
+  order.api:
+    image: ${DOCKER_REGISTRY-}orderapi
+    build:
+      context: .
+      dockerfile: services/Order/Order.Api/Dockerfile
+    depends_on:
+        - orderdb
+
+  partner.api:
+    image: ${DOCKER_REGISTRY-}partnerapi
+    build:
+      context: .
+      dockerfile: services/Partner/Partner.Api/Dockerfile
+    depends_on:
+        - partnerdb
+
+  shipping.api:
+    image: ${DOCKER_REGISTRY-}shippingapi
+    build:
+      context: .
+      dockerfile: services/Shipping/Shipping.Api/Dockerfile
+    depends_on:
+        - shippingdb
+
+  status.api:
+    image: ${DOCKER_REGISTRY-}statusapi
+    build:
+      context: .
+      dockerfile: services/Status/Status.Api/Dockerfile
+    depends_on:
+        - statusdb
+
+  apigateway:
+    image: ${DOCKER_REGISTRY-}apigateway
+    build:
+      context: .
+      dockerfile: gateway/ApiGateway/Dockerfile
+
+volumes:
+    portainer_volume:
+    postgres_data:

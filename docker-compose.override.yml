@@ -1,0 +1,141 @@
+version: '3.4'
+
+services:
+  postgres:
+    build:
+      context: infrastructure/postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: rootpassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5455:5432"
+
+  keycloak:
+    build:
+      context: infrastructure/keycloak
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=Password123
+      - KC_DB_URL=jdbc:postgresql://postgres/keycloak
+      - KC_DB_USERNAME=postgres
+      - KC_DB_PASSWORD=rootpassword
+      - NO_THEME_CACHE=true
+    ports:
+      - "8443:8443"
+    depends_on:
+      - postgres
+
+  portainer:
+    container_name: portainer
+    restart: always
+    ports:
+      - "8080:8000"
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_volume:/data
+
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  orderdb:
+    container_name: orderdb
+    environment:
+      SA_PASSWORD: "Password123"
+      ACCEPT_EULA: "Y"  
+    restart: always
+    ports:
+      - "3500:1433"
+
+  idpdb:
+    container_name: idpdb
+    environment:
+      SA_PASSWORD: "Password123"
+      ACCEPT_EULA: "Y"  
+    restart: always
+    ports:
+      - "3550:1433"
+
+  partnerdb:
+    container_name: partnerdb
+    environment:
+      SA_PASSWORD: "Password123"
+      ACCEPT_EULA: "Y"  
+    restart: always
+    ports:
+      - "3501:1433"
+
+  shippingdb:
+    container_name: shippingdb
+    environment:
+      SA_PASSWORD: "Password123"
+      ACCEPT_EULA: "Y"  
+    restart: always
+    ports:
+      - "3502:1433"
+
+  statusdb:
+    container_name: statusdb
+    environment:
+      SA_PASSWORD: "Password123"
+      ACCEPT_EULA: "Y"  
+    restart: always
+    ports:
+      - "3503:1433"
+
+  order.api:
+    environment:
+      - "ConnectionStrings__OrderConnectionString=Server=orderdb,1433;Database=OrderDb;User Id=sa;Password=Password123"
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RabbitMQ__HostName=rabbitmq
+      - RabbitMQ__Port=5672
+    ports:
+      - "5000:80"
+      - "5100:443"
+      
+  partner.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings__PartnerConnectionString=Server=partnerdb,1433;Database=PartnerDb;User Id=sa;Password=Password123"
+      - RabbitMQ__HostName=rabbitmq
+      - RabbitMQ__Port=5672
+    ports:
+      - "5001:80"
+      - "5101:443"
+
+  shipping.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5002:80"
+      - "5102:443"
+
+  status.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings__StatusConnectionString=Server=statusdb,1433;Database=StatusDb;User Id=sa;Password=Password123"
+      - RabbitMQ__HostName=rabbitmq
+      - RabbitMQ__Port=5672
+    ports:
+      - "5003:80"
+      - "5103:443"
+
+  apigateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - KESTREL__Certificates__Default__Path=/app/cert/idp.pfx
+      - KESTREL__Certificates__Default__Password=Password123
+    ports:
+      - "50000:80"
+      - "50001:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ./cert:/app/cert

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\libs\CSONGE.Messaging\CSONGE.Messaging.csproj" />
+    <ProjectReference Include="..\..\..\sharedkernel\SharedKernel\SharedKernel.csproj" />
+  </ItemGroup>
+
+</Project>
